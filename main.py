@@ -3,8 +3,6 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from utils.helpers import *
 
-FREE_DELIVERY_THRESHOLD = 10000 #? double check
-
 app = FastAPI()
 
 # {"cart_value": 790, "delivery_distance": 2235,
@@ -31,6 +29,9 @@ async def root():
 
 @app.get("/delivery_fee")
 async def create_item(cart: Cart_Model):
+	FREE_DELIVERY_THRESHOLD = 10000
+	MAX_DELIVERY_FEE = 15000
+
 	cart = cart.dict()
 	fee = 0
 	result = {}
@@ -44,5 +45,7 @@ async def create_item(cart: Cart_Model):
 	if cart["number_of_items"] >= 5:
 		fee += calculate_item_fee(cart["number_of_items"])
 
+	if fee > MAX_DELIVERY_FEE:
+		fee = MAX_DELIVERY_FEE
 	result["delivery_fee"] = fee
 	return result

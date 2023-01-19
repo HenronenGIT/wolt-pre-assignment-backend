@@ -73,7 +73,7 @@ def test_free_delivery_fee():
 	content = get_delivery_fee_content(cart)
 	assert content == {'delivery_fee': 0}
 
-# def test_max_delivery_fe():
+# def test_max_delivery_fee():
 # 	cart = {
 # 		"cart_value": 100,
 # 		"delivery_distance": 0,

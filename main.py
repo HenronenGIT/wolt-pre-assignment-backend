@@ -1,19 +1,15 @@
-import json
+from models.cart import Cart_Model
 from fastapi import FastAPI
 from pydantic import BaseModel
 from utils.helpers import *
 
 app = FastAPI()
 
-# {"cart_value": 790, "delivery_distance": 2235,
-# "number_of_items": 4, "time": "2021-10-12T13:00:00Z"}
-
-
-class Cart_Model(BaseModel):
-    cart_value: int
-    delivery_distance: int
-    number_of_items: int
-    time: str
+# class Cart_Model(BaseModel):
+#     cart_value: int
+#     delivery_distance: int
+#     number_of_items: int
+#     time: str
 
 # Landing page
 

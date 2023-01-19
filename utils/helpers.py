@@ -1,3 +1,5 @@
+# import constant
+
 def calculate_small_surcharge(cart_value: int) -> int:
 	"""
 	Calculates small surcharge fee for the cart.
@@ -39,3 +41,14 @@ def calculate_distance_fee(distance: int) -> int:
 		if multiplier > 1:
 			base_fee += 100
 		return int(base_fee + multiplier * per_meter_fee)
+
+def calculate_item_fee(item_count: int) -> int:
+	BULK_FEE_THRESHOLD = 12
+	BULK_FEE = 120
+	EXTRA_FEE_THRESHOLD = 4
+	FEE_PER_ITEM = 50
+	
+	fee = 0
+	if item_count > BULK_FEE_THRESHOLD:
+		fee += BULK_FEE
+	return fee + ((item_count - EXTRA_FEE_THRESHOLD) * FEE_PER_ITEM)

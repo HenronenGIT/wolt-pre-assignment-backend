@@ -1,7 +1,6 @@
 import json
 from fastapi import FastAPI
 from pydantic import BaseModel
-# from utils.helpers import calculate_small_surcharge
 from utils.helpers import *
 
 app = FastAPI()
@@ -28,17 +27,15 @@ async def root():
 # Delivery fee
 
 
-@app.post("/delivery_fee")
+@app.get("/delivery_fee")
 async def create_item(cart: Cart_Model):
 	cart = cart.dict()
 	fee = 0
 	# if cart["cart_value"] < 1000:
 		# fee += calculate_small_surcharge(cart["cart_value"])
-	fee += calculate_distance_fee(cart["delivery_distance"])
-
-
-
-
+	# fee += calculate_distance_fee(cart["delivery_distance"])
+	if cart["number_of_items"] >= 5:
+		fee += calculate_item_fee(cart["number_of_items"])
 
 	result = {}
 	result["delivery_fee"] = fee

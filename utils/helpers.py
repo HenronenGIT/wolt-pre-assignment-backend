@@ -1,4 +1,6 @@
 # import constant
+from datetime import datetime
+import pytz
 
 def calculate_small_surcharge(cart_value: int) -> int:
 	"""
@@ -22,25 +24,18 @@ def calculate_distance_fee(distance: int) -> int:
 	Returns:
 		(int): The distance fee.
 	"""
-	base_fee = 200
-	threshold = 500 #! better name
-	per_meter_fee = 100
-	distance -= 1000
+	BASE_FEE = 200
+	THRESHOLD = 500 #! better name
+	PER_METER_FEE = 100
 
-	if distance % threshold == 0:
-		return base_fee + (distance // threshold * per_meter_fee)
-	elif distance / threshold < 0:
-		return int(base_fee)
-	elif distance / threshold < 1:
-		return int(base_fee + per_meter_fee)
-	else:
-		multiplier = distance / threshold
-		if multiplier > 1:
-			multiplier += 1
-		print(multiplier)
-		if multiplier > 1:
-			base_fee += 100
-		return int(base_fee + multiplier * per_meter_fee)
+	if distance <= 1000:
+		return BASE_FEE
+	distance -= 1000
+	multiplier = 1
+	multiplier = distance // THRESHOLD
+	if distance % 500:
+		multiplier += 1
+	return int(PER_METER_FEE * multiplier + BASE_FEE)
 
 def calculate_item_fee(item_count: int) -> int:
 	BULK_FEE_THRESHOLD = 12
@@ -52,3 +47,26 @@ def calculate_item_fee(item_count: int) -> int:
 	if item_count > BULK_FEE_THRESHOLD:
 		fee += BULK_FEE
 	return fee + ((item_count - EXTRA_FEE_THRESHOLD) * FEE_PER_ITEM)
+
+def rush_hour(current_time: str) -> bool:
+	"""
+	Receives current time and checks that is it a rush hour in UTC timezone.
+	Args:
+		current_time (str)
+	Returns:
+		(bool): If it is rush hour, returns True (bool
+	"""
+	RUSH_HOUR_START = "15:00"
+	RUSH_HOUR_END = "19:00"
+	MULTIPLIER = 1.2
+	FRIDAY = 4
+
+	current = datetime.strptime(current_time, "%Y-%m-%dT%H:%M:%SZ")
+	if current.weekday() != FRIDAY:
+		return (False)
+	start = datetime.strptime(RUSH_HOUR_START, "%H:%M")
+	end = datetime.strptime(RUSH_HOUR_END, "%H:%M")
+	if start.time() <= current.time() <= end.time():
+		return (True)
+	return (False)
+	

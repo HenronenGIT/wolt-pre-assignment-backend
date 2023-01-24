@@ -1,6 +1,4 @@
 from datetime import datetime
-from models.cart import Cart_Model
-from fastapi import HTTPException
 
 def calculate_small_surcharge(cart_value: int) -> int:
 	"""
@@ -11,7 +9,7 @@ def calculate_small_surcharge(cart_value: int) -> int:
 	Returns:
 		(int): Small surcharge fee.
 	"""
-	BASE = 1000  # !better name for this
+	BASE = 1000
 	return BASE - cart_value
 
 
@@ -37,7 +35,7 @@ def calculate_distance_fee(distance: int) -> int:
 		multiplier += 1
 	return int(PER_METER_FEE * multiplier + BASE_FEE)
 
-def calculate_item_fee(item_count: int) -> int:
+def calculate_item_count_fee(item_count: int) -> int:
 	BULK_FEE_THRESHOLD = 12
 	BULK_FEE = 120
 	EXTRA_FEE_THRESHOLD = 4
@@ -46,7 +44,7 @@ def calculate_item_fee(item_count: int) -> int:
 	fee = 0
 	if item_count > BULK_FEE_THRESHOLD:
 		fee += BULK_FEE
-	return fee + ((item_count - EXTRA_FEE_THRESHOLD) * FEE_PER_ITEM)
+	return max(0, fee + ((item_count - EXTRA_FEE_THRESHOLD) * FEE_PER_ITEM))
 
 def rush_hour(current_time: str) -> bool:
 	"""
@@ -54,7 +52,7 @@ def rush_hour(current_time: str) -> bool:
 	Args:
 		current_time (str)
 	Returns:
-		(bool): If it is rush hour, returns True (bool
+		(bool): If it is rush hour, returns True (bool)
 	"""
 	RUSH_HOUR_START = "15:00"
 	RUSH_HOUR_END = "19:00"
@@ -68,19 +66,3 @@ def rush_hour(current_time: str) -> bool:
 	if start.time() <= current.time() <= end.time():
 		return (True)
 	return (False)
-	
-def validate_payload(cart: Cart_Model):
-	if cart.cart_value < 0:
-		raise HTTPException(
-			status_code=422, detail="The attribute 'cart_value' should be positive value"
-		)
-	if cart.delivery_distance < 0:
-		raise HTTPException(
-			status_code=422, detail="The attribute 'delivery_distance' should be positive value"
-		)
-	if cart.number_of_items < 0:
-		raise HTTPException(
-			status_code=422, detail="The attribute 'number_of_items' should be positive value"
-		)
-
-

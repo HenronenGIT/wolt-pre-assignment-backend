@@ -1,5 +1,3 @@
-# import requests
-# import json
 from .utils import *
 
 FEE_URL = "http://localhost:8000/delivery_fee"
@@ -70,8 +68,8 @@ def test_max_delivery_fee():
 # def test_rush_hour_fee():
 # 	cart = {
 # 		"cart_value": 100,
-# 		"delivery_distance": 1,
-# 		"number_of_items": 1,
+# 		"delivery_distance": 500,
+# 		"number_of_items": 4,
 # 		"time": "2020-1-3T16:00:00Z"
 # 	}
 # 	content = get_api_content(cart)

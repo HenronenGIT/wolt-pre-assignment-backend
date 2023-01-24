@@ -46,7 +46,6 @@ def calculate_item_count_fee(item_count: int) -> int:
 		fee += BULK_FEE
 	return max(0, fee + ((item_count - EXTRA_FEE_THRESHOLD) * FEE_PER_ITEM))
 
-# def rush_hour(current_time: str) -> bool:
 def calculate_rush_hour_fee(current_time: str, current_fee: int) -> int:
 	"""
 	"""

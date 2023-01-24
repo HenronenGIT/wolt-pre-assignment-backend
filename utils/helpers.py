@@ -46,23 +46,20 @@ def calculate_item_count_fee(item_count: int) -> int:
 		fee += BULK_FEE
 	return max(0, fee + ((item_count - EXTRA_FEE_THRESHOLD) * FEE_PER_ITEM))
 
-def rush_hour(current_time: str) -> bool:
+# def rush_hour(current_time: str) -> bool:
+def calculate_rush_hour_fee(current_time: str, current_fee: int) -> int:
 	"""
-	Receives current time and checks that is it a rush hour in UTC timezone.
-	Args:
-		current_time (str)
-	Returns:
-		(bool): If it is rush hour, returns True (bool)
 	"""
 	RUSH_HOUR_START = "15:00"
 	RUSH_HOUR_END = "19:00"
 	FRIDAY = 4
+	RUSH_HOUR_MULTIPLIER = 1.2
 
 	current = datetime.strptime(current_time, "%Y-%m-%dT%H:%M:%SZ")
 	if current.weekday() != FRIDAY:
-		return (False)
+		return (current_fee)
 	start = datetime.strptime(RUSH_HOUR_START, "%H:%M")
 	end = datetime.strptime(RUSH_HOUR_END, "%H:%M")
 	if start.time() <= current.time() <= end.time():
-		return (True)
-	return (False)
+		return (current_fee * RUSH_HOUR_MULTIPLIER)
+	return (current_fee)

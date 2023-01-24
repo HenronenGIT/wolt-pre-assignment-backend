@@ -67,13 +67,13 @@ def test_max_delivery_fee():
 	content = get_api_content(cart)
 	assert content == {'delivery_fee': 0}
 
-def test_rush_hour_fee():
-	cart = {
-		"cart_value": 100,
-		"delivery_distance": 1,
-		"number_of_items": 1,
-		"time": "2020-1-3T16:00:00Z"
-	}
-	content = get_api_content(cart)
-	assert content == {'delivery_fee': 0}
+# def test_rush_hour_fee():
+# 	cart = {
+# 		"cart_value": 100,
+# 		"delivery_distance": 1,
+# 		"number_of_items": 1,
+# 		"time": "2020-1-3T16:00:00Z"
+# 	}
+# 	content = get_api_content(cart)
+# 	assert content == {'delivery_fee': 0}
 

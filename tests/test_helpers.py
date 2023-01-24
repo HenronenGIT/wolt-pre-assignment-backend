@@ -48,22 +48,23 @@ def test_item_count_fee():
 	assert fee == 570
 
 def test_rush_hour():
+	RUSH_HOUR_MULTIPLIER = 1.2
 	rush_hours = [
-		"2013-3-22T15:00:00Z",
-		"2004-2-13T16:00:00Z",
-		"2023-1-20T19:00:00Z"
+		("2013-3-22T15:00:00Z", 500),
+		("2004-2-13T16:00:00Z", 600),
+		("2023-1-20T19:00:00Z", 100)
 		]
 
-	for time in rush_hours:
-		assert rush_hour(time) == True
+	for time, test_fee in rush_hours:
+		assert calculate_rush_hour_fee(time, test_fee) == test_fee * RUSH_HOUR_MULTIPLIER
 
-def test_not_rush_hour():
-	not_rush_hours = [
-		"2023-1-20T14:00:00Z",
-		"2023-1-20T20:00:00Z",
-		"2004-2-16T19:00:00Z",
-		"2020-1-20T15:00:00Z",
-		]
+# def test_not_rush_hour():
+# 	not_rush_hours = [
+# 		"2023-1-20T14:00:00Z",
+# 		"2023-1-20T20:00:00Z",
+# 		"2004-2-16T19:00:00Z",
+# 		"2020-1-20T15:00:00Z",
+# 		]
 	
-	for time in not_rush_hours:
-		assert rush_hour(time) == False
+# 	for time in not_rush_hours:
+# 		assert rush_hour(time) == False

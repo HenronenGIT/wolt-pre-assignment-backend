@@ -19,7 +19,6 @@ async def calculate_delivery_fee(cart: Cart_Model) -> dict:
 	SMALL_SURCHARGE_THRESHOLD = 1000
 	MAX_DELIVERY_FEE = 15000
 	ITEM_COUNT_THRESHOLD = 5
-	RUSH_HOUR_MULTIPLIER = 1.2
 
 	fee = 0
 	if (cart.cart_value >= FREE_DELIVERY_THRESHOLD):
@@ -29,7 +28,9 @@ async def calculate_delivery_fee(cart: Cart_Model) -> dict:
 		fee += calculate_small_surcharge(cart.cart_value)
 	if (cart.number_of_items >= ITEM_COUNT_THRESHOLD):
 		fee += calculate_item_count_fee(cart.number_of_items)
-	if (rush_hour(cart.time)):
-		fee *= RUSH_HOUR_MULTIPLIER
+	# if (rush_hour(cart.time)):
+		# fee *= RUSH_HOUR_MULTIPLIER
+	fee = calculate_rush_hour_fee(cart.time, fee)
+	
 	fee = min(fee, MAX_DELIVERY_FEE)
 	return {"delivery_fee": fee}

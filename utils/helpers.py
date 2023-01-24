@@ -1,4 +1,6 @@
 from datetime import datetime
+from models.cart import Cart_Model
+from fastapi import HTTPException
 
 def calculate_small_surcharge(cart_value: int) -> int:
 	"""
@@ -67,3 +69,18 @@ def rush_hour(current_time: str) -> bool:
 		return (True)
 	return (False)
 	
+def validate_payload(cart: Cart_Model):
+	if cart.cart_value < 0:
+		raise HTTPException(
+			status_code=422, detail="The attribute 'cart_value' should be positive value"
+		)
+	if cart.delivery_distance < 0:
+		raise HTTPException(
+			status_code=422, detail="The attribute 'delivery_distance' should be positive value"
+		)
+	if cart.number_of_items < 0:
+		raise HTTPException(
+			status_code=422, detail="The attribute 'number_of_items' should be positive value"
+		)
+
+

@@ -1,17 +1,18 @@
 from models.cart import Cart_Model
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from utils.helpers import *
 
 app = FastAPI()
 
 @app.get("/delivery_fee")
-async def create_item(cart: Cart_Model) -> dict:
+async def calculate_delivery_fee(cart: Cart_Model) -> dict:
 	FREE_DELIVERY_THRESHOLD = 10000
 	SMALL_SURCHARGE_THRESHOLD = 1000
 	MAX_DELIVERY_FEE = 15000
 	ITEM_COUNT_THRESHOLD = 5
 	RUSH_HOUR_MULTIPLIER = 1.2
-	
+
+	validate_payload(cart)
 	fee = 0
 	if (cart.cart_value >= FREE_DELIVERY_THRESHOLD):
 		return {"delivery_fee": 0}

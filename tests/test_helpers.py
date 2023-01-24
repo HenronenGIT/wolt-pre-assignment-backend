@@ -63,3 +63,4 @@ def test_small_surcharge():
 		"time": "2021-10-12T13:00:00Z"
 	}
 	# calculate_distance_fee()
+

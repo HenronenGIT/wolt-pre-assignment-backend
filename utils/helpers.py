@@ -1,6 +1,4 @@
-# import constant
 from datetime import datetime
-import pytz
 
 def calculate_small_surcharge(cart_value: int) -> int:
 	"""
@@ -11,8 +9,8 @@ def calculate_small_surcharge(cart_value: int) -> int:
 	Returns:
 		(int): Small surcharge fee.
 	"""
-	better_name = 1000  # !better name for this
-	return better_name - cart_value
+	BASE = 1000  # !better name for this
+	return BASE - cart_value
 
 
 def calculate_distance_fee(distance: int) -> int:
@@ -58,7 +56,6 @@ def rush_hour(current_time: str) -> bool:
 	"""
 	RUSH_HOUR_START = "15:00"
 	RUSH_HOUR_END = "19:00"
-	MULTIPLIER = 1.2
 	FRIDAY = 4
 
 	current = datetime.strptime(current_time, "%Y-%m-%dT%H:%M:%SZ")

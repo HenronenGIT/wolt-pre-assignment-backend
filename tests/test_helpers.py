@@ -3,27 +3,27 @@ from utils.helpers import *
 def test_delivery_distance():
 	PER_METER_FEE = 100
 	BASE_FEE = 200
+	base_fee_distances = [
+		400,
+		1,
+		0,
+		999,
+	]
+	for distance in base_fee_distances:
+		fee = calculate_distance_fee(distance)
+		assert fee == BASE_FEE
 
-	cart = {
-		"cart_value": 1000,
-		"delivery_distance": 1,
-		"number_of_items": 1,
-		"time": "2021-10-12T13:00:00Z"
-	}
-	fee = calculate_distance_fee(cart["delivery_distance"])
-	assert fee == BASE_FEE
-
-	cart["delivery_distance"] = 1499
-	fee = calculate_distance_fee(cart["delivery_distance"])
+	fee = calculate_distance_fee(1499)
 	assert fee == BASE_FEE + PER_METER_FEE
 
-	cart["delivery_distance"] = 1500
-	fee = calculate_distance_fee(cart["delivery_distance"])
+	fee = calculate_distance_fee(1500)
 	assert fee == BASE_FEE + PER_METER_FEE
 
-	cart["delivery_distance"] = 1501
-	fee = calculate_distance_fee(cart["delivery_distance"])
+	fee = calculate_distance_fee(1501)
 	assert fee == BASE_FEE + PER_METER_FEE * 2
+
+	fee = calculate_distance_fee(1600)
+	assert fee == 400
 
 def test_small_surcharge():
 	test_values = [

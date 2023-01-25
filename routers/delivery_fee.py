@@ -7,7 +7,7 @@ router = APIRouter()
 @router.get("/delivery_fee")
 async def calculate_delivery_fee(cart: Cart_Model) -> dict:
 	"""
-	Endpoint to calculate delivery fee based on received payload.
+	Endpoint to calculate delivery fee based contents of 'cart'.
 	---
 	responses:
 			200:

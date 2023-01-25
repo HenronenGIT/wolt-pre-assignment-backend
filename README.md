@@ -1,5 +1,10 @@
 # Wolt Summer 2023 Pre-assignment - Backend
 
+## Description
+
+HTTP backend API with a single endpoint, done with Python FastAPI.
+
+
 ##  How to use
 
 1. From the root of your repo run `uvicorn main:app`

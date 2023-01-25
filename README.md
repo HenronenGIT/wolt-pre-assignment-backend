@@ -9,6 +9,7 @@ HTTP backend API with a single endpoint, done with Python FastAPI.
 
 1. From the root of your repo run `uvicorn main:app`
 2. Testing can be done with the command `pytest`
+3. If relative error message appears when running tests, run `pip install .`
 
 API is running in port 8000
 
@@ -29,3 +30,9 @@ Respond:
 ```json
 	{"delivery_fee": int}
 ```
+
+## Note
+
+`setup.py` was not needed on my local machine, but when repo was cloned to new machine,
+there was relative import error message when `pytest` was executed. Getting rid of this run `pip install .`
+

@@ -6,8 +6,8 @@ HTTP backend API with a single endpoint, done with Python FastAPI.
 
 
 ##  How to use
-1. `pip install .`
-2. From the root of your repo run `uvicorn main:app`
+1. `pip install -r requirements.txt`
+2. `uvicorn main:app`
 3. Testing can be done with the command `pytest`
 4. If relative error message appears when running tests, run `pip install .`
 
